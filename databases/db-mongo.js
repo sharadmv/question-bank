@@ -5,7 +5,7 @@ var host = 'localhost';
 var port = '27017';
 var dbname = 'questionDb';
 
-var path = 'mongodb://' + host + ':' + port + '/' + dbname;
+var path = process.env.MONGOHQ_URL || 'mongodb://' + host + ':' + port + '/' + dbname;
 
 exports.getAll = function(dbname, callback) {
   MongoClient.connect(path, function(err, db) {
