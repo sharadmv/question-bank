@@ -5,7 +5,7 @@ var host = 'localhost';
 var port = '27017';
 
 var path = process.env.MONGOHQ_URL || 'mongodb://' + host + ':' + port + '/';
-//path = "mongodb://root:61a-master@linus.mongohq.com:10013/app10368472"
+path = "mongodb://root:61a-master@linus.mongohq.com:10013/app10368472"
 var db = mongoskin.db(path);
 
 
