@@ -1,0 +1,30 @@
+
+/* HOME PAGE */
+
+div.main {
+    width:251px;
+}
+
+div#questions {
+    float:left;
+    text-align:center;
+}
+
+div#questions a {
+    text-decoration:none;
+}
+
+div#login {
+    float:right;
+}
+
+div#login div label {
+    float:left;
+    width:70px;
+    text-align:right;
+    padding-right:5px;
+}
+
+div#submit-btn {
+    text-align:left;
+}

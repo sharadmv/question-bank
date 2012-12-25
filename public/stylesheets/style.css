@@ -1,8 +1,54 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin:45px;
+  font:14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+/* LINKS */
+
+div#contents a, li {
+    padding:5px;
+    border-radius:4px;
 }
+
+div#contents a:hover {
+    color:#eeeeee;
+    background-color:#5555ee;
+}
+
+/* HEADER */
+
+div#header {
+    min-height:130px;
+}
+
+div#logo {
+    position:absolute;
+}
+
+div#logo h1 {
+    font-size:4em;
+    margin:0;
+}
+
+div#logo a, div#logo a:hover {
+    text-decoration:none;;
+    color:#000000;
+}
+
+
+/* NAVIGATION */
+
+div#nav-bar {
+    float:right;
+}
+
+div#nav-bar ul {
+    list-style-type:none;
+    padding:0;
+    margin:0;
+}
+
+div#nav-bar li {
+    display:inline;
+}
+
