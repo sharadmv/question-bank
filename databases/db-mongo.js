@@ -31,7 +31,7 @@ exports.get = function(dbname, query, callback) {
 
 exports.save = function(dbname, doc, callback) {
   MongoClient.connect(path, function(err, db) {
-    if (err) console.dir(err);
+    if (err) return err;
     db.collection(dbname).save(doc, function() {
       callback();
       db.close();

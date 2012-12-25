@@ -13,6 +13,7 @@
     "jade": "*",
     "mongodb": "1.2.7",
     "restler": "2.0.x",
-    "querystring": "*"
+    "querystring": "*",
+    "node-markdown": "*"
   }
 }
