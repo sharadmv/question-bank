@@ -1,9 +1,9 @@
 /* Dependencies */
-var db = require('../databases/db-mongo.js');
+var db = require('../util/dao.js');
 
 /* GET */
 exports.list = function (req, res) {
-    db.getAll('questions', function(err, result) {
+    db.question.find({}, function(err, result) {
         if (err) throw err;
         res.render('qlist', {list: result});
     });
