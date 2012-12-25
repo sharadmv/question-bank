@@ -1,6 +1,12 @@
 Question Bank
 =============
 
+You can run the program with
+
+    node app
+
+By default it connects to port 3000.
+
 Dependencies
 ------------
 
