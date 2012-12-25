@@ -4,7 +4,7 @@ Question Bank
 Dependencies
 ------------
 
-* node.js
+* [node.js](http://nodejs.org/)
 * [Express](http://expressjs.com/guide.html): directory manager
 * [Jade](http://naltatis.github.com/jade-syntax-docs/): template engine
 * [MongoDB](http://www.mongodb.org/): database
