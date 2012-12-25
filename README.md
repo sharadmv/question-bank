@@ -35,3 +35,8 @@ templates.
 `routes` contains controllers that are used in `app.js`.
 
 `public` contains static files.
+
+MongoHQ
+----------
+* Command Line Access: mongo linus.mongohq.com:10013/app10368472 -u <user> -p<password>
+* Mongo URI: mongodb://<user>:<password>@linus.mongohq.com:10013/app10368472
