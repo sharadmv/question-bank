@@ -7,6 +7,9 @@ var express = require('express')
   , question = require('./routes/question')
   , admin = require('./routes/admin')
   , http = require('http')
+  , dao = require('./util/dao.js')
+  , model = require('./util/model.js')
+  , md = require('node-markdown').Markdown
   , path = require('path');
 
 var app = express();
@@ -37,6 +40,30 @@ app.get('/admin', admin.home);
 app.get('/admin/edit', admin.edit);
 
 app.post('/admin/edit/create', admin.save_q);
+
+//test rendering
+app.get('/question/:id', function(req, res) {
+  var start = new Date().getTime();
+  dao.question.getById(req.params.id, function(err, result) {
+    res.send(md(result.content));
+  })
+});
+
+//API functions
+app.get('/api/question/:id', function(req, res) {
+  var start = new Date().getTime();
+  dao.question.getById(req.params.id, function(err, result) {
+    res.json({ data : result, elapsed : (new Date().getTime() - start)});
+  })
+});
+
+app.get('/api/question', function(req, res) {
+  var start = new Date().getTime();
+  dao.question.find({}, function(err, result) {
+    res.json({ data : result, elapsed : (new Date().getTime() - start)});
+  })
+});
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

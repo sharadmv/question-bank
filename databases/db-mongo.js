@@ -1,40 +1,36 @@
 
-var MongoClient = require('mongodb').MongoClient;
+var mongoskin = require('mongoskin')
 
 var host = 'localhost';
 var port = '27017';
-var dbname = 'questionDb';
 
-var path = 'mongodb://' + host + ':' + port + '/' + dbname;
+var path = process.env.MONGOHQ_URL || 'mongodb://' + host + ':' + port + '/';
+//path = "mongodb://root:61a-master@linus.mongohq.com:10013/app10368472"
+var db = mongoskin.db(path);
 
-exports.getAll = function(dbname, callback) {
-  MongoClient.connect(path, function(err, db) {
-    if (err) return console.log(err);
-    db.collection(dbname)
-      .find()
-      .toArray(function(err, result) {
-        callback(err, result);
-        db.close();
-      });
-  });
-};
 
-exports.get = function(dbname, query, callback) {
-  MongoClient.connect(path, function(err, db) {
-    if (err) return console.log(err);
-    db.collection(dbname).findOne(query, function(err, result) {
+exports.getAll = function(coll, query, callback) {
+  db.collection(coll)
+    .find(query)
+    .toArray(function(err, result) {
       callback(err, result);
-      db.close();
     });
+};
+
+exports.get = function(coll, query, callback) {
+  db.collection(coll).findOne(query, function(err, result) {
+    callback(err, result);
   });
 };
 
-exports.save = function(dbname, doc, callback) {
-  MongoClient.connect(path, function(err, db) {
-    if (err) console.dir(err);
-    db.collection(dbname).save(doc, function() {
-      callback();
-      db.close();
-    });
+exports.getById = function(coll, id, callback) {
+  db.collection(coll).findById(id, function(err, result) {
+    callback(err, result);
+  });
+};
+
+exports.save = function(coll, doc, callback) {
+  db.collection(coll).save(doc, function() {
+    callback();
   });
 };
