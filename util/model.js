@@ -1,8 +1,9 @@
 var model = {
     Code : {
-        Output : function(heap, globals) {
+        Output : function(heap, globals, stdout) {
             this.heap = heap;
             this.globals = globals;
+            this.stdout = stdout;
         }
     }
 }
