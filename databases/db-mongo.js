@@ -9,7 +9,7 @@ var path = process.env.MONGOHQ_URL || 'mongodb://' + host + ':' + port + '/' + d
 
 exports.getAll = function(dbname, callback) {
   MongoClient.connect(path, function(err, db) {
-    if (err) return console.log(err);
+    if (err) return err;
     db.collection(dbname)
       .find()
       .toArray(function(err, result) {
@@ -21,7 +21,7 @@ exports.getAll = function(dbname, callback) {
 
 exports.get = function(dbname, query, callback) {
   MongoClient.connect(path, function(err, db) {
-    if (err) return console.log(err);
+    if (err) return err;
     db.collection(dbname).findOne(query, function(err, result) {
       callback(err, result);
       db.close();
