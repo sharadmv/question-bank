@@ -5,7 +5,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
+  , question = require('./routes/question')
+  , admin = require('./routes/admin')
   , http = require('http')
   , path = require('path');
 
@@ -23,6 +24,7 @@ app.configure(function(){
   app.use(express.session());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'databases')));
 });
 
 app.configure('development', function(){
@@ -30,7 +32,12 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/questions', question.list);
+app.get('/q=:name', question.single);
+app.get('/admin', admin.home);
+app.get('/admin/edit', admin.edit);
+
+app.post('/admin/edit/create', admin.save_q);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

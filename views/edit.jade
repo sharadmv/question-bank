@@ -1,0 +1,18 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/stylesheets/edit.css')
+
+block content
+  form#edit-form(method='post', action='/admin/edit/create')
+    #title
+      h2 Title
+      input(type='text', name='title')
+    #body
+      h2 Contents
+      textarea(name='body')
+    #solution
+      h2 Solution
+      textarea(name='solution')
+    #submit-btn
+      input(type='submit', value='Save')

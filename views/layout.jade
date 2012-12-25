@@ -1,7 +1,16 @@
 doctype 5
 html
   head
-    title= title
+    title Alpha
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block css
   body
-    block content
+    #header
+      #logo
+        h1: a(href='/') Alpha
+      #nav-bar
+        ul
+          li: a(href='') About
+          li: a(href='') Problems
+    #contents
+      block content

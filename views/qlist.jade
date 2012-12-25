@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1 Questions
+  p Here you can find questions.
+  ul
+    for question in list
+      li: a(href='/q=' + question.title) #{question.title}
