@@ -5,17 +5,6 @@ body {
 
 /* LINKS */
 
-div#contents a, li {
-    padding:5px;
-    border-radius:4px;
-}
-
-div#contents a:hover {
-    color:#eeeeee;
-    background-color:#5555ee;
-}
-
-/* HEADER */
 
 div#header {
     min-height:130px;
