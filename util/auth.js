@@ -1,6 +1,6 @@
 var Connection= require('ssh2');
 
-exports.login = function(username, password, callback) {
+exports.authenticate = function(username, password, callback) {
   var ssh = new Connection();
   ssh.on('ready', function() {
     callback(true);

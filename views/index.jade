@@ -4,9 +4,11 @@ block css
   link(rel='stylesheet', href='stylesheets/home.css')
 
 block content
+  script(src='/js/questions.js')
+  script(src='/js/index.js')
   p Welcome to Alpha. Here you will find questions.
-  #questions.main
-    h1: a(href='questions') Questions
+  #questionList()
+  #currentQuestion
   #login.main
     form
      #username
@@ -17,4 +19,3 @@ block content
        input(type='password')
      #submit-btn
        input(type='submit', value='Login')
-    

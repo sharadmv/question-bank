@@ -3,13 +3,10 @@ extends layout
 block css
   link(rel='stylesheet', href='/stylesheets/admin.css')
 
-block content
-  h1 Admin Home
-  a(href='/admin/edit') New Question
-  h2 Existing Questions
-  ul
-    for question in questions
-      li 
-        a(href='') #{question.title}
 
-    
+block content
+  script(src='/js/questions.js')
+  h1 Admin Home
+  a(href='/admin/add') New Question
+  h2 Existing Questions
+  #questionList

@@ -35,19 +35,13 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/questions', question.list);
-app.get('/q=:name', question.single);
+app.get('/question/:id', question.single);
 app.get('/admin', admin.home);
-app.get('/admin/edit', admin.edit);
+app.get('/admin/:action', function(req, res) {
+  admin[req.params.action](req, res);
+});
 
 app.post('/admin/edit/create', admin.save_q);
-
-//test rendering
-app.get('/question/:id', function(req, res) {
-  var start = new Date().getTime();
-  dao.question.getById(req.params.id, function(err, result) {
-    res.send(md(result.content));
-  })
-});
 
 //API functions
 app.get('/api/question/:id', function(req, res) {

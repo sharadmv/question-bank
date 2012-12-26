@@ -1,11 +1,11 @@
 /* Dependencies */
-var db = require('../databases/db-mongo');
+var dao = require('../util/dao');
 
 /* GET */
 
 // Home page
 exports.home = function (req, res) {
-    db.getAll('questions', function(err, result) {
+    dao.question.find({}, function(err, result) {
       res.render('admin-home', {questions: result});
     });
 };
@@ -13,6 +13,10 @@ exports.home = function (req, res) {
 // Edit question page
 exports.edit = function (req, res) {
     res.render('edit', {});
+};
+
+exports.add = function(req, res) {
+    res.render('add', {});
 };
 
 
