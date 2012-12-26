@@ -549,7 +549,7 @@ function tok() {
         token.text = escape(token.text, true);
       }
 
-      return '<pre><code'
+      return '<pre class="prettyprint"><code'
         + (token.lang
         ? ' class="lang-'
         + token.lang
