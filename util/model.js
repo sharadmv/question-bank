@@ -30,6 +30,12 @@ var model = {
     this.query = query;
     this.timestamp = timestamp.getTime();
     this.elapsed = elapsed;
-  }
+  },
+
+  User : function(login, username, section) {
+    this.login = login;
+    this.username = username;
+    this.section = section;
+  },
 }
 module.exports = model;

@@ -6,6 +6,7 @@ var express = require('express')
   , routes = require('./routes')
   , question = require('./routes/question')
   , admin = require('./routes/admin')
+  , user = require('./routes/user')
   , http = require('http')
   , dao = require('./util/dao.js')
   , model = require('./util/model.js')
@@ -40,6 +41,21 @@ app.get('/admin', admin.home);
 app.get('/admin/:action', function(req, res) {
   admin[req.params.action](req, res);
 });
+
+app.get('/settings', function(req, res) {
+  req.session.login = 'cs61a';
+  var sections = ['1', '2', '3'];
+  var user = dao.user.get(req.session.login, function(err, result) {
+    res.render('settings', {
+      login: result.login,
+      username: result.username,
+      userSection: result.section,
+      sections: sections,
+    });
+  });
+});
+
+app.post('/settings', user.save);
 
 
 //API functions
