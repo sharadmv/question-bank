@@ -24,6 +24,7 @@
     },
     render : function(model) {
       $(this.el).html(this.template(this.model.toJSON()));
+      prettyPrint();
     },
     template : function(model) {
       return marked(model.content)
