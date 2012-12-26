@@ -32,10 +32,12 @@ var model = {
     this.elapsed = elapsed;
   },
 
-  User : function(login, username, section) {
+  User : function(id, login, username, section) {
+    this._id = id;
     this.login = login;
     this.username = username;
     this.section = section;
+
   },
 }
 module.exports = model;

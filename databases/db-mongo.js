@@ -29,6 +29,12 @@ exports.getById = function(coll, id, callback) {
   });
 };
 
+exports.update = function(coll, query, update, callback) {
+  db.collection(coll).update(query, update, function(err, result) {
+    callback(err, result);
+  });
+};
+
 exports.save = function(coll, doc, callback) {
   db.collection(coll).save(doc, function() {
     console.log(doc);

@@ -42,10 +42,11 @@ app.get('/admin/:action', function(req, res) {
   admin[req.params.action](req, res);
 });
 
+/* User Settings */
 app.get('/settings', function(req, res) {
   req.session.login = 'cs61a';
   var sections = ['1', '2', '3'];
-  var user = dao.user.get(req.session.login, function(err, result) {
+  var user = dao.user.getByLogin(req.session.login, function(err, result) {
     res.render('settings', {
       login: result.login,
       username: result.username,
@@ -55,7 +56,14 @@ app.get('/settings', function(req, res) {
   });
 });
 
-app.post('/settings', user.save);
+app.get('/users', function(req, res) {
+  dao.user.find({}, function(err, result) {
+    res.json(result);
+  });
+});
+
+app.post('/settings', user.update);
+
 
 
 //API functions

@@ -20,13 +20,18 @@ exports.question = {
 }
 
 exports.user = {
-  get : function(login, callback) {
+  getByLogin : function(login, callback) {
     db.get('user', {login: login}, function(err, result) {
-      user = new model.User(login, result.username, result.section);
+      user = new model.User(result.id, login, result.username, result.section);
       callback(err, user);
     });
   },
-  save : function(user, callback) {
-    db.save('user', user, callback);
+  find : function(query,callback) {
+    db.getAll('user', query, function(err, result) {
+      callback(err, result);
+    });
+  },
+  update : function(login, update, callback) {
+    db.update('user', {login: login}, { $set: update }, callback);
   },
 }
