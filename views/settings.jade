@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  form#user-settings(method='post', action='/settings')
+    h1 User settings
+
+    #form-login
+      | Login: #{login}
+    
+    #form-username
+      label(for='username') Username
+      input(type='text', name='username', value=username)
+
+    #form-section
+      label(for='section') Section
+      select(name='section')
+        for section in sections
+          if section == userSection
+            option(value=section, selected) #{userSection}
+          else
+            option(value=section) #{section}
+
+    #form-update
+      input(type='submit', value='Update')
+

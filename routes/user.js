@@ -1,8 +1,14 @@
+var dao = require('../util/dao');
+var model = require('../util/model');
 
-/*
- * GET users listing.
- */
+exports
 
-exports.list = function(req, res){
-  res.send("respond with a resource");
+exports.save = function(req, res) {
+  var user = new model.User(
+    req.session['login'],
+    req.param('username'),
+    req.param('section')
+  );
+  dao.user.save(user, function() {
+  });
 };

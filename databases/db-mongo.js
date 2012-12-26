@@ -31,6 +31,7 @@ exports.getById = function(coll, id, callback) {
 
 exports.save = function(coll, doc, callback) {
   db.collection(coll).save(doc, function() {
+    console.log(doc);
     callback();
   });
 };

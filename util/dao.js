@@ -18,3 +18,15 @@ exports.question = {
     db.save("question", question, callback);
   }
 }
+
+exports.user = {
+  get : function(login, callback) {
+    db.get('user', {login: login}, function(err, result) {
+      user = new model.User(login, result.username, result.section);
+      callback(err, user);
+    });
+  },
+  save : function(user, callback) {
+    db.save('user', user, callback);
+  },
+}
