@@ -1,18 +1,41 @@
 extends layout
 
-block css
-  link(rel='stylesheet', href='/stylesheets/edit.css')
 
 block content
-  form#edit-form(method='post', action='/admin/edit/create')
-    #title
-      h2 Title
-      input(type='text', name='title')
-    #body
-      h2 Contents
-      textarea(name='body')
-    #solution
-      h2 Solution
-      textarea(name='solution')
-    #submit-btn
-      input(type='submit', value='Save')
+  link(rel='stylesheet', href='/css/edit.css')
+  script(src='/js/chosen.js')
+  script(src='/js/questions.js')
+  script(src='/js/add.js')
+  #wrapper
+    #addForm
+      #titleHeader
+        h2 Title
+        input(id='title', type='text', name='title')
+      #typeBox
+        h2 Type
+        select(id='type')
+          option Coding
+          option Numerical
+          option Other
+      #contentBox
+        h2 Contents
+        textarea(id='content',name='content')
+      #solutionBox
+        h2 Solution
+        textarea(id='solution', name='solution')
+      #testsBox
+        h2 Tests
+        textarea(id='tests',name='content')
+      #difficultyBox
+        h2 Difficulty
+        input(id='difficulty')
+      #categoryBox
+        h2 Category
+        input(id='category')
+      #tagBox
+        h2 Tags
+        input(id='tags')
+      #saveBox
+        button(id='preview', value='Preview') Preview
+        button(id='save', value='Save') Save
+    #previewBox

@@ -2,6 +2,9 @@
 var BASE_URL = "/#/";
 
 var Question = Backbone.Model.extend({
+  url : function() {
+    return '/api/question/'+this._id;
+  }
 });
 var QuestionList = Backbone.Collection.extend({
   model : Question,
@@ -10,6 +13,7 @@ var QuestionList = Backbone.Collection.extend({
     return response.data
   }
 });
+
 //Views
 var UpdateView = Backbone.View.extend({
   initialize : function(options) {

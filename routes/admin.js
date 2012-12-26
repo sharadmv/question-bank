@@ -1,5 +1,6 @@
 /* Dependencies */
 var dao = require('../util/dao');
+var model = require('../util/model');
 
 /* GET */
 
@@ -23,11 +24,20 @@ exports.add = function(req, res) {
 /* POST */
 
 // Save question to database
-exports.save_q = function(req, res) {
-    var doc = {title: req.param('title'),
-               body: req.param('body'),
-               solution: req.param('solution')};
-    db.save('questions', doc, function() {
-        res.redirect('/admin');
-    });
+exports.save = function(req, res) {
+  var question =
+    new model.Question(null,
+      req.param('title'),
+      req.param('content'),
+      req.param('solution'),
+      req.param('tests'),
+      req.param('difficulty'),
+      req.param('category'),
+      req.param('tags'),
+      req.param('type'),
+      req.param('comments')
+    );
+  dao.question.save(question, function() {
+    res.send(200);
+  });
 };

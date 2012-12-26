@@ -41,7 +41,6 @@ app.get('/admin/:action', function(req, res) {
   admin[req.params.action](req, res);
 });
 
-app.post('/admin/edit/create', admin.save_q);
 
 //API functions
 app.get('/api/question/:id', function(req, res) {
@@ -57,6 +56,8 @@ app.get('/api/question', function(req, res) {
     res.json({ data : result, elapsed : (new Date().getTime() - start)});
   })
 });
+
+app.post('/api/question', admin.save);
 
 
 http.createServer(app).listen(app.get('port'), function(){
