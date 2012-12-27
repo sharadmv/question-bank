@@ -67,7 +67,8 @@ app.post('/api/session', function(req, res) {
     if (result) {
       dao.user.getByLogin(login, function(err, user) {
         res.cookie('login', login, {signed : true});
-        if (!user) {
+        console.log(user);
+        if (user.username == "") {
           res.send(201);
         } else {
           res.send(200);
