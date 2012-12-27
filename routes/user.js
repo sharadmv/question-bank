@@ -2,7 +2,7 @@ var dao = require('../util/dao');
 var model = require('../util/model');
 
 exports.update = function(req, res) {
-  dao.user.update(req.signedCookies.username, {
+  dao.user.update(req.signedCookies.login, {
     username: req.param('username'),
     section: req.param('section'),
   }, function() {

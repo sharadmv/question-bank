@@ -89,16 +89,7 @@ app.get('/api/users', function(req, res) {
   });
 });
 
-app.post('/settings', function(req, res) {
-  dao.user.update(req.signedCookies.login, {
-    username: req.param('username'),
-    section: req.param('section'),
-  }, function() {
-    res.redirect('/');
-  });
-});
-
-
+app.post('/settings', user.update);
 
 //API functions
 app.get('/api/question/:id', function(req, res) {
