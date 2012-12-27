@@ -8,7 +8,14 @@ var path = process.env.MONGOHQ_URL || 'mongodb://' + host + ':' + port + '/';
 path = "mongodb://root:61a-master@linus.mongohq.com:10013/app10368472"
 var db = mongoskin.db(path);
 
-
+/**
+ ** Input:
+ **     coll - 
+ **     query - 
+ **     callback - 
+ **
+ ** Output:
+ **/
 exports.getAll = function(coll, query, callback) {
   db.collection(coll)
     .find(query)
@@ -16,6 +23,7 @@ exports.getAll = function(coll, query, callback) {
       callback(err, result);
     });
 };
+
 
 exports.get = function(coll, query, callback) {
   db.collection(coll).findOne(query, function(err, result) {
