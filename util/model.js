@@ -37,7 +37,6 @@ var model = {
     this.login = login;
     this.username = username;
     this.section = section;
-
   },
 }
 module.exports = model;

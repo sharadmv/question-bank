@@ -10,12 +10,13 @@ var express = require('express')
   , http = require('http')
   , dao = require('./util/dao.js')
   , model = require('./util/model.js')
+  , auth = require('./util/auth.js')
   , md = require('node-markdown').Markdown
   , path = require('path');
 
 var app = express();
 
-app.configure(function(){
+app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -23,8 +24,8 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.cookieParser('your secret here'));
-  app.use(express.session());
+  app.use(express.cookieParser('this is my secret'));
+  app.use(express.cookieSession());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.static(path.join(__dirname, 'databases')));
@@ -42,11 +43,14 @@ app.get('/admin/:action', function(req, res) {
   admin[req.params.action](req, res);
 });
 
+var session = {
+};
+
 /* User Settings */
 app.get('/settings', function(req, res) {
-  req.session.login = 'cs61a';
   var sections = ['1', '2', '3'];
-  var user = dao.user.getByLogin(req.session.login, function(err, result) {
+
+  var user = dao.user.getByLogin(req.signedCookies.login, function(err, result) {
     res.render('settings', {
       login: result.login,
       username: result.username,
@@ -56,13 +60,43 @@ app.get('/settings', function(req, res) {
   });
 });
 
-app.get('/users', function(req, res) {
+app.post('/api/session', function(req, res) {
+  var login = req.param('login');
+  var password = req.param('password');
+  auth.authenticate(login, password, function(result) {
+    if (result) {
+      dao.user.getByLogin(login, function(err, user) {
+        res.cookie('login', login, {signed : true});
+        if (!user) {
+          res.send(201);
+        } else {
+          res.send(200);
+        }
+      });
+    } else {
+      res.send(501);
+    }
+  });
+});
+
+app.del('/api/session', function(req, res) {
+  res.clearCookie('login');
+});
+
+app.get('/api/users', function(req, res) {
   dao.user.find({}, function(err, result) {
     res.json(result);
   });
 });
 
-app.post('/settings', user.update);
+app.post('/settings', function(req, res) {
+  dao.user.update(req.signedCookies.login, {
+    username: req.param('username'),
+    section: req.param('section'),
+  }, function() {
+    res.redirect('/');
+  });
+});
 
 
 
