@@ -22,8 +22,12 @@ exports.question = {
 exports.user = {
   getByLogin : function(login, callback) {
     db.get('user', {login: login}, function(err, result) {
-      user = new model.User(result.id, login, result.username, result.section);
-      callback(err, user);
+      if ( !result) {
+        callback(err, {login: login, username: '', userSection: ''});
+      } else {
+        user = new model.User(result.id, login, result.username, result.section);
+        callback(err, user);
+      }
     });
   },
   find : function(query,callback) {
@@ -32,6 +36,13 @@ exports.user = {
     });
   },
   update : function(login, update, callback) {
-    db.update('user', {login: login}, { $set: update }, callback);
+    db.get('user', {login: login}, function(err, result) {
+      if (!result) {
+        update['login'] = login;
+        db.save('user', update, callback);
+      } else {
+        db.update('user', {login: login}, { $set: update }, callback);
+      }
+    });
   },
 }

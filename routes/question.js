@@ -11,7 +11,6 @@ exports.list = function (req, res) {
 
 exports.single = function (req, res) {
     dao.question.getById(req.params.id, function(err, result) {
-        console.log(result);
         res.render('question', {
           question : result
         });

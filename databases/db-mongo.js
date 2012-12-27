@@ -45,7 +45,6 @@ exports.update = function(coll, query, update, callback) {
 
 exports.save = function(coll, doc, callback) {
   db.collection(coll).save(doc, function() {
-    console.log(doc);
     callback();
   });
 };

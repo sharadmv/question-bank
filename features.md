@@ -22,16 +22,16 @@ name/login.
 2) Question Formats
 
 There are three basic question formats (feel free to add more categories as they come up):
-	a) Numerical:   This is basically anything that is satisfied by a simple numerical
+* Numerical:   This is basically anything that is satisfied by a simple numerical
 		        answer. Think projecteuler questions here.
 
-	b) Programming: This is basically anything that requires a piece of code to be
+* Programming: This is basically anything that requires a piece of code to be
 			written and evaluated. So, any algorithms questions would go here.
 			These will be tested using unit tests, and we need to be pretty
 			careful here since we can't go back and add more tests since that
 			would break solutions that were previously deemed correct.
 
-	c) Other:       Thse are pretty much any other kind of question. We'll rely on the
+* Other:       Thse are pretty much any other kind of question. We'll rely on the
 			student/user to self-grade these questions.
 
 3) Search/Filter:
