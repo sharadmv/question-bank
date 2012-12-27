@@ -16,4 +16,3 @@ exports.authenticate = function(username, password, callback) {
     password : password
   });
 }
-exports.authenticate("cs61a-rb","isawtom1")
