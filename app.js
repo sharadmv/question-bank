@@ -82,6 +82,7 @@ app.post('/api/session', function(req, res) {
 
 app.del('/api/session', function(req, res) {
   res.clearCookie('login');
+  res.send(200);
 });
 
 app.get('/api/users', function(req, res) {
