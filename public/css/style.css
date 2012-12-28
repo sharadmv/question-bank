@@ -1,5 +1,5 @@
 body {
-  margin:45px;
+  margin:0px;
   font:14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,11 +7,14 @@ body {
 
 
 div#header {
-    min-height:130px;
+    min-height:102px;
+    background:#add8e6;
 }
 
 div#logo {
     position:absolute;
+    top:31px;
+    left:2%;
 }
 
 div#logo h1 {
@@ -41,3 +44,28 @@ div#nav-bar li {
     display:inline;
 }
 
+button#login{
+    position:relative;
+    top:40px;
+    right:25%;
+    text-align:center;
+    text-vertical-align:center;
+    font-size:90%;
+    text-transform:scale(2,1);
+    text-webkit-transform:scale(2,1);
+}
+
+button {
+    border-radius:.3em;
+    background-color:white;
+    height:22px;
+    width:100px;
+}
+
+button:hover {
+    background-color:#C19E36;
+}
+
+button:active {
+    background-color:#252C58;
+}

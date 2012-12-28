@@ -16,21 +16,10 @@ html
       #logo
         h1: a(href='/') Alpha
       #nav-bar
-        ul
-          li: a(href='') About
-          li: a(href='') Problems
-    #login.main
-       if login
+        if login
           p Logged in as #{login}
           button(id='logout') Logout
-       else
-         #usernameBox
-            label Username
-            input(id='username',type='text')
-         #passwordBox
-           label Password
-           input(id='password',type='password')
-         #submit-btn
-         button(class='button', id='loginButton', value='Login') Login
+        else
+          button(id='login') Login
     #contents
       block content
