@@ -69,3 +69,16 @@ button:hover {
 button:active {
     background-color:#252C58;
 }
+
+div#contents {
+    position:absolute;
+    top:150px;
+    left:25%;
+}
+
+div#questionList {
+    text-align:left;
+    text-color:black;
+}
+
+
