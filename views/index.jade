@@ -1,10 +1,9 @@
 extends layout
 
-block css
-  link(rel='stylesheet', href='stylesheets/home.css')
-
 block content
+  link(rel='stylesheet', href='/css/index.css')
   script(src='/js/questions.js')
   script(src='/js/index.js')
-  #questionList()
-  #currentQuestion
+  #contentWrapper
+    #questionList
+    #currentQuestion

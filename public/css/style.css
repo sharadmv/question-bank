@@ -30,8 +30,9 @@ div#logo a, div#logo a:hover {
 
 /* NAVIGATION */
 
-div#nav-bar {
+#nav-bar {
     float:right;
+    line-height:102px;
 }
 
 div#nav-bar ul {
@@ -43,7 +44,7 @@ div#nav-bar ul {
 div#nav-bar li {
     display:inline;
 }
-
+/*
 button#login{
     position:relative;
     top:40px;
@@ -54,8 +55,9 @@ button#login{
     text-transform:scale(2,1);
     text-webkit-transform:scale(2,1);
 }
+*/
 
-button {
+/*button {
     border-radius:.3em;
     background-color:white;
     height:22px;
@@ -68,17 +70,20 @@ button:hover {
 
 button:active {
     background-color:#252C58;
+}*/
+#loginWrapper {
+  opacity:0;
+  margin-top:-35px;
+  margin-right:10px;
+  padding:5px;
+  background-color:#1B8BCA;
+  border-radius:5px;
+  line-height:1.2em;
 }
-
-div#contents {
-    position:absolute;
-    top:150px;
-    left:25%;
+#loginLink {
+  font-size:20px;
+  cursor:pointer;
 }
-
-div#questionList {
-    text-align:left;
-    text-color:black;
+#submit-btn {
+  text-align:center;
 }
-
-
