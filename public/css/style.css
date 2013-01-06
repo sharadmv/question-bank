@@ -83,6 +83,7 @@ button:active {
 .nav-link{
   font-size:20px;
   cursor:pointer;
+  margin-left:30px;
 }
 #submit-btn {
   text-align:center;

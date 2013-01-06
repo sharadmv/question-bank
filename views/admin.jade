@@ -1,12 +1,14 @@
 extends layout
 
-block css
-  link(rel='stylesheet', href='/stylesheets/admin.css')
-
 
 block content
+  link(rel='stylesheet', href='/css/admin.css')
   script(src='/js/questions.js')
-  h1 Admin Home
-  a(href='/admin/add') New Question
-  h2 Existing Questions
-  #questionList
+  script(src='/js/admin.js')
+  #contentWrapper
+    #left
+      h1 Admin Home
+      a() New Question
+      h2 Existing Questions
+      #questionList
+    #currentQuestion

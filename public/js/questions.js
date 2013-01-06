@@ -1,5 +1,5 @@
 //Models
-var BASE_URL = "/#/";
+var BASE_URL = "#/";
 
 var Question = Backbone.Model.extend({
   url : function() {

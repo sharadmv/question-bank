@@ -1,0 +1,11 @@
+/* HOME PAGE */
+#contentWrapper {
+  position: relative;
+}
+
+#left {
+  float: left;
+}
+#currentQuestion {
+  float: left;
+}
