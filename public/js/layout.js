@@ -16,7 +16,8 @@
     events : {
       "click #loginButton" : "login",
       "click #loginLink" : "toggle",
-      "keypress #loginWrapper" : "enter"
+      "keypress #loginWrapper" : "enter",
+      "click #cancelButton" : "hide"
     },
     display : function(text) {
       this.$("#loginLink").html(text);
