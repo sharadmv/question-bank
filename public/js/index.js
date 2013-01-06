@@ -32,28 +32,6 @@
     }
   });
 
-  var LoginBox = Backbone.View.extend({
-    events : {
-      "click #loginButton" : "login"
-    },
-    login : function(){
-      var username = this.$("#username").val();
-      var password = this.$("#password").val();
-      console.log(username, password);
-      $.post('/api/session', {
-        login : username,
-        password : password
-      }, function(data) {
-      }).success(function(message, status, obj) {
-        if (obj.status == 201) {
-          window.location = "/settings";
-        }
-      }).error(function() {
-        console.log("FAILURE!");
-      });
-    }
-  });
-
   var App = Backbone.Router.extend({
     routes: {
       "question/:id" :"question",
@@ -75,7 +53,6 @@
     questionList.fetch({ update : true });
     currentQuestion = new CurrentQuestion();
     currentQuestionView = new CurrentQuestionView({ model : currentQuestion, el : $("#currentQuestion")});
-    loginBox = new LoginBox({ el : $("#login") });
     Backbone.history.start({ root : "/" });
   });
 })();

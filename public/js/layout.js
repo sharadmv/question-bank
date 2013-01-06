@@ -29,30 +29,37 @@
     login : function(){
       var username = this.$("#username").val();
       var password = this.$("#password").val();
-      var self = this;
-      $.post('/api/session', {
-        login : username,
-        password : password
-      }, function(data) {
-        self.display("Logout");
-        self.hide();
-      }).success(function(message, status, obj) {
-        if (obj.status == 201) {
-          window.location = "/settings";
-        }
-      }).error(function() {
-        console.log("FAILURE!");
-      });
+      if (username && password) {
+        var self = this;
+        $.post('/api/session', {
+          login : username,
+          password : password
+        }, function(data) {
+        }).success(function(message, status, obj) {
+          self.display("Logout");
+          self.hide();
+          self.loggedIn = true;
+          if (obj.status == 201) {
+            location = "/settings";
+          } else {
+            location.reload();
+          }
+        }).error(function() {
+          console.log("FAILURE!");
+        });
+      }
     },
     logout : function() {
       $.ajax({
         type : 'delete',
         url : '/api/session'
       }).success(function () {
+        this.loggedIn = false;
         location.reload();
       });
     },
     toggle : function() {
+      console.log(this.loggedIn);
       if (this.loggedIn) {
         this.logout();
       } else {

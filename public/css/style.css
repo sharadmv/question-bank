@@ -80,7 +80,7 @@ button:active {
   border-radius:5px;
   line-height:1.2em;
 }
-#loginLink {
+.nav-link{
   font-size:20px;
   cursor:pointer;
 }

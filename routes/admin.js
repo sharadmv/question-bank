@@ -6,25 +6,20 @@ var model = require('../util/model');
 
 // Home page
 exports.home = function (req, res) {
-    dao.question.find({}, function(err, result) {
-      res.render('admin-home', {questions: result});
-    });
-};
+    if (req.signedCookies.user && req.signedCookies.user.admin) {
+      dao.question.find({}, function(err, result) {
+        res.render('admin', {questions: result, login : req.signedCookies.user.login, admin : req.signedCookies.user.admin});
+      });
+    } else {
+      res.send(401);
+    }
 
-// Edit question page
-exports.edit = function (req, res) {
-    res.render('edit', {});
 };
-
-exports.add = function(req, res) {
-    res.render('add', {});
-};
-
 
 /* POST */
 
 // Save question to database
-exports.save = function(req, res) {
+exports.add = function(req, res) {
   var question =
     new model.Question(null,
       req.param('title'),
@@ -37,7 +32,11 @@ exports.save = function(req, res) {
       req.param('type'),
       req.param('comments')
     );
-  dao.question.save(question, function() {
+  if (question.title != null) {
+    dao.question.save(question, function() {
+      res.send(200);
+    });
+  } else {
     res.send(200);
-  });
+  }
 };

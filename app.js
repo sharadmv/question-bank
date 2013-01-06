@@ -11,9 +11,17 @@ var express = require('express')
   , dao = require('./util/dao.js')
   , model = require('./util/model.js')
   , auth = require('./util/auth.js')
-  , md = require('node-markdown').Markdown
+  , fs = require('fs')
   , path = require('path');
 
+var admins = {};
+fs.readFile('./admins.txt', function (err, data) {
+  if (err) throw err;
+  var data = data.toString('ascii').trim().split("\n");
+  for (var i in data) {
+    admins[data[i]] = true;
+  }
+});
 var app = express();
 
 app.configure(function() {
@@ -66,8 +74,7 @@ app.post('/api/session', function(req, res) {
   auth.authenticate(login, password, function(result) {
     if (result) {
       dao.user.getByLogin(login, function(err, user) {
-        res.cookie('login', login, {signed : true});
-        console.log(user);
+        res.cookie('user', {'login' : login, admin : (login in admins)}, {signed : true});
         if (user.username == "") {
           res.send(201);
         } else {
@@ -81,7 +88,7 @@ app.post('/api/session', function(req, res) {
 });
 
 app.del('/api/session', function(req, res) {
-  res.clearCookie('login');
+  res.clearCookie('user');
   res.send(200);
 });
 
@@ -108,7 +115,7 @@ app.get('/api/question', function(req, res) {
   })
 });
 
-app.post('/api/question', admin.save);
+app.post('/api/question', admin.add);
 
 
 http.createServer(app).listen(app.get('port'), function(){

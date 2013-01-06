@@ -20,7 +20,9 @@ html
           window.login="#{login}"
         #loginBox
           #buttonWrapper
-            a(id='loginLink') Login
+            a(id='loginLink',class='nav-link') Login
+            if admin
+              a(href='/admin', class='nav-link') Admin
             //-img(src='/img/loading.gif')
           #loginWrapper
             #usernameBox
