@@ -58,12 +58,13 @@ var session = {
 app.get('/settings', function(req, res) {
   var sections = ['1', '2', '3'];
 
-  var user = dao.user.getByLogin(req.signedCookies.login, function(err, result) {
+  var user = dao.user.getByLogin(req.signedCookies.user.login, function(err, result) {
     res.render('settings', {
       login: result.login,
       username: result.username,
       userSection: result.section,
       sections: sections,
+      admin : req.signedCookies.user.admin,
     });
   });
 });
