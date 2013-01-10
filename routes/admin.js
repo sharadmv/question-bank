@@ -22,6 +22,7 @@ exports.home = function (req, res) {
 exports.add = function(req, res) {
   var question =
     new model.Question(null,
+      req.param('author'),
       req.param('title'),
       req.param('content'),
       req.param('solution'),
@@ -30,7 +31,8 @@ exports.add = function(req, res) {
       req.param('category'),
       req.param('tags'),
       req.param('type'),
-      req.param('comments')
+      req.param('comments'),
+      req.param('template')
     );
   if (question.title != null) {
     dao.question.save(question, function() {
