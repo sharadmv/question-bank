@@ -11,8 +11,9 @@ var model = {
   /**
    * The Question class encapsulates the questions that are in the database
    */
-  Question : function(id, title, content, solution, tests, difficulty, category, tags, type, comments) {
+  Question : function(id, author, title, content, solution, tests, difficulty, category, tags, type, comments, template) {
     this._id = id;
+    this.author = author;
     this.title = title;
     this.content = content;
     this.solution = solution;
@@ -21,6 +22,7 @@ var model = {
     this.category = category;
     this.tags = tags;
     this.type = type;
+    this.template = template;
     this.comments = comments;
   },
   Response:function(data, status, url, query, timestamp, elapsed) {
