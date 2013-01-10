@@ -18,6 +18,7 @@
     save : function() {
       tags = $("#tags").val().trim().split(" ");
       var question = new NewQuestion({
+        author: this.$("#author").val(),
         title : this.$("#title").val(),
         content : this.$("#content").val(),
         solution : this.$("#solution").val(),
