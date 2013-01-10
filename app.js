@@ -47,6 +47,7 @@ app.get('/', routes.index);
 app.get('/questions', question.list);
 app.get('/question/:id', question.single);
 app.get('/admin', admin.home);
+app.get('/admin/add', admin.add);
 app.get('/admin/:action', function(req, res) {
   admin[req.params.action](req, res);
 });
