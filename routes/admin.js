@@ -16,6 +16,14 @@ exports.home = function (req, res) {
 
 };
 
+exports.addQuestion = function(req, res) {
+  if (req.signedCookies.user && req.signedCookies.user.admin) {
+    res.render('add', { login : req.signedCookies.user.login, admin : req.signedCookies.user.admin});
+  } else {
+    res.send(401);
+  }
+}
+
 /* POST */
 
 // Save question to database
