@@ -58,11 +58,17 @@ var session = {
 app.get('/settings', function(req, res) {
   var sections = ['1', '2', '3'];
 
+  console.log(req.signedCookies);
   var user = dao.User.findOne({login : req.signedCookies.user.login}, function(err, result) {
-
+    result = result || {
+        login : req.signedCookies.user.login,
+        username : "",
+        name : "",
+        section : "",
+    };
     result.admin = req.signedCookies.user.admin;
     result.sections = sections;
-    console.log(result[0]);
+    console.log(result);
     res.render('settings', result);
   });
 });
@@ -74,8 +80,8 @@ app.post('/api/session', function(req, res) {
     if (result) {
       dao.User.find({ login : login }, function(err, users) {
         res.cookie('user', {'login' : login, admin : (login in admins)}, {signed : true});
+        console.log(users);
         if (users.length == 0) {
-          console.log("SUP")
           res.send(201);
         } else {
           res.send(200);

@@ -17,7 +17,6 @@
     initialize : function() {
         this.question = new Question({
         });
-        this.clear();
         var self = this;
         currentQuestion.on('change', function()  {
             self.load(currentQuestion);
@@ -57,7 +56,6 @@
         this.preview();
     },
     clear : function() {
-        console.log("Form being cleared");
         this.question.set('author', '');
         this.question.set('title', '');
         this.question.set('content', '');
@@ -67,6 +65,9 @@
         this.question.set('category', '');
         this.question.set('difficulty', '');
         this.question.set('tags', []);
+        this.fields();
+    },
+    fields : function() {
         this.$("#author").val(this.question.get('author'));
         this.$("#title").val(this.question.get('title'));
         this.$("#content").val(this.question.get('content'));
@@ -76,6 +77,7 @@
         this.$("#category").val(this.question.get('category'));
         this.$("#difficulty").val(this.question.get('difficulty'));
         this.$("#tags").val(this.question.get('tags').join(" "));
+        this.preview();
     },
     load : function(question) {
         window.question = question;
@@ -91,17 +93,7 @@
         this.question.set('category', question.get('category'));
         this.question.set('difficulty', question.get('difficulty'));
         this.question.set('tags', question.get('tags'));
-        console.log(question, this.question);
-        this.$("#author").val(this.question.get('author'));
-        this.$("#title").val(this.question.get('title'));
-        this.$("#content").val(this.question.get('content'));
-        this.$("#solution").val(this.question.get('solution'));
-        this.$("#type").val(this.question.get('type'));
-        this.$("#tests").val(this.question.get('tests'));
-        this.$("#category").val(this.question.get('category'));
-        this.$("#difficulty").val(this.question.get('difficulty'));
-        this.$("#tags").val(this.question.get('tags').join(" "));
-        console.log("Finished loading question:", this.question);
+        this.fields();
         this.preview();
     },
     save : function() {

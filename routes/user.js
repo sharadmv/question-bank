@@ -6,11 +6,12 @@ exports.update = function(req, res) {
   console.log(user);
   user.login = req.signedCookies.user.login;
   var upsertData = user.toObject();
-  console.log(user, upsertData);
   delete upsertData._id;
+  console.log(user, upsertData);
   dao.User.findOneAndUpdate({login : user.login}, upsertData, {upsert: true}, function(err, result){
+    console.log(err, result);
     if (err) {
-      throw err;
+      res.send(200);
     } else {
       res.json(result);
     }

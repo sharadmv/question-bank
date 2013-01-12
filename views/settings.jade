@@ -6,6 +6,10 @@ block content
 
     #form-login
       | Login: #{login}
+
+    #form-name
+      label(for='name') Real Name
+      input(type='text', name='name', value=name)
     
     #form-username
       label(for='username') Username
@@ -18,7 +22,7 @@ block content
           if s == section
             option(value=section, selected) #{section}
           else
-            option(value=section) #{section}
+            option(value=section) #{s}
 
     #form-update
       input(type='submit', value='Update')
