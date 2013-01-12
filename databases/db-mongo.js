@@ -10,9 +10,9 @@ var db = mongoskin.db(path);
 
 /**
  ** Input:
- **     coll - 
- **     query - 
- **     callback - 
+ **     coll -
+ **     query -
+ **     callback -
  **
  ** Output:
  **/
@@ -44,7 +44,14 @@ exports.update = function(coll, query, update, callback) {
 };
 
 exports.save = function(coll, doc, callback) {
-  db.collection(coll).save(doc, function() {
-    callback();
-  });
+  if (!doc._id) {
+    db.collection(coll).save(doc, function() {
+      callback();
+    });
+  } else {
+    db.collection(coll).updateById(doc._id, {$set : doc}, function() {
+        console.log(arguments);
+
+    });
+  }
 };

@@ -8,7 +8,7 @@ var express = require('express')
   , admin = require('./routes/admin')
   , user = require('./routes/user')
   , http = require('http')
-  , dao = require('./util/dao.js')
+  , dao = require('./databases/mongo.js')
   , model = require('./util/model.js')
   , auth = require('./util/auth.js')
   , fs = require('fs')
@@ -58,14 +58,12 @@ var session = {
 app.get('/settings', function(req, res) {
   var sections = ['1', '2', '3'];
 
-  var user = dao.user.getByLogin(req.signedCookies.user.login, function(err, result) {
-    res.render('settings', {
-      login: result.login,
-      username: result.username,
-      userSection: result.section,
-      sections: sections,
-      admin : req.signedCookies.user.admin,
-    });
+  var user = dao.User.findOne({login : req.signedCookies.user.login}, function(err, result) {
+
+    result.admin = req.signedCookies.user.admin;
+    result.sections = sections;
+    console.log(result[0]);
+    res.render('settings', result);
   });
 });
 
@@ -74,9 +72,10 @@ app.post('/api/session', function(req, res) {
   var password = req.param('password');
   auth.authenticate(login, password, function(result) {
     if (result) {
-      dao.user.getByLogin(login, function(err, user) {
+      dao.User.find({ login : login }, function(err, users) {
         res.cookie('user', {'login' : login, admin : (login in admins)}, {signed : true});
-        if (user.username == "") {
+        if (users.length == 0) {
+          console.log("SUP")
           res.send(201);
         } else {
           res.send(200);
@@ -94,7 +93,7 @@ app.del('/api/session', function(req, res) {
 });
 
 app.get('/api/users', function(req, res) {
-  dao.user.find({}, function(err, result) {
+  dao.User.find({}, function(err, result) {
     res.json(result);
   });
 });
@@ -104,20 +103,23 @@ app.post('/settings', user.update);
 //API functions
 app.get('/api/question/:id', function(req, res) {
   var start = new Date().getTime();
-  dao.question.getById(req.params.id, function(err, result) {
-    res.json({ data : result, elapsed : (new Date().getTime() - start)});
+  dao.Question.findOne({ _id : req.params.id }, function(err, question) {
+    res.json({ data : question, elapsed : (new Date().getTime() - start)});
   })
 });
 
 app.get('/api/question', function(req, res) {
   var start = new Date().getTime();
-  dao.question.find({}, function(err, result) {
-    res.json({ data : result, elapsed : (new Date().getTime() - start)});
+  dao.Question.find({}, function(err, questions) {
+    res.json({ data : questions, elapsed : (new Date().getTime() - start)});
   })
 });
 
-app.post('/api/question', admin.add);
-
+app.del('/api/question/:id', admin.delete);
+app.post('/api/question', admin.save);
+app.post('/api/question/:id', admin.save);
+app.put('/api/question', admin.save);
+app.put('/api/question/:id', admin.save);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

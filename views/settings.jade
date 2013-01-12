@@ -14,9 +14,9 @@ block content
     #form-section
       label(for='section') Section
       select(name='section')
-        for section in sections
-          if section == userSection
-            option(value=section, selected) #{userSection}
+        for s in sections
+          if s == section
+            option(value=section, selected) #{section}
           else
             option(value=section) #{section}
 

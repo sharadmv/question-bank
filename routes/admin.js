@@ -1,5 +1,5 @@
 /* Dependencies */
-var dao = require('../util/dao');
+var dao = require('../databases/mongo');
 var model = require('../util/model');
 
 /* GET */
@@ -7,8 +7,7 @@ var model = require('../util/model');
 // Home page
 exports.home = function (req, res) {
     if (req.signedCookies.user && req.signedCookies.user.admin) {
-      dao.question.find({}, function(err, result) {
-        res.render('admin', {questions: result, login : req.signedCookies.user.login, admin : req.signedCookies.user.admin});
+      dao.Question.find({}, function(err, result) { res.render('admin', {questions: result, login : req.signedCookies.user.login, admin : req.signedCookies.user.admin});
       });
     } else {
       res.send(401);
@@ -26,27 +25,40 @@ exports.addQuestion = function(req, res) {
 
 /* POST */
 
+exports.delete = function(req, res) {
+  if (req.signedCookies.user && req.signedCookies.user.admin) {
+    dao.Question.findById(req.params.id, function(err, result) {
+        if (err) {
+            res.json({});
+        } else {
+            if (result) {
+                result.remove(function() {
+                    res.json(result);
+                });
+            } else {
+                res.json({})
+            }
+        }
+    })
+  } else {
+    res.send(401);
+  }
+};
 // Save question to database
-exports.add = function(req, res) {
-  var question =
-    new model.Question(null,
-      req.param('author'),
-      req.param('title'),
-      req.param('content'),
-      req.param('solution'),
-      req.param('tests'),
-      req.param('difficulty'),
-      req.param('category'),
-      req.param('tags'),
-      req.param('type'),
-      req.param('comments'),
-      req.param('template')
-    );
-  if (question.title != null) {
-    dao.question.save(question, function() {
-      res.send(200);
+exports.save = function(req, res) {
+  if (req.signedCookies.user && req.signedCookies.user.admin) {
+    var question = new dao.Question(req.body);
+    var upsertData = question.toObject();
+    delete upsertData._id;
+    dao.Question.findOneAndUpdate({_id: question._id}, upsertData, {upsert: true}, function(err, result){
+        if (err) {
+            throw err;
+        } else {
+            console.log(arguments);
+            res.json(result);
+        }
     });
   } else {
-    res.send(200);
+    res.send(401);
   }
 };

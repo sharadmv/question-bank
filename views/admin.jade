@@ -8,7 +8,42 @@ block content
   #contentWrapper
     #left
       h1 Admin Home
-      a() New Question
+      a(id='newQuestion') New Question
       h2 Existing Questions
       #questionList
     #currentQuestion
+      #titleHeader
+        h2 Title
+        input(id='title', type='text', name='title')
+      #authorBox
+        h2 Author
+        input(id='author', type='text', name='author')
+      #typeBox
+        h2 Type
+        select(id='type')
+          option Coding
+          option Numerical
+          option Other
+      #contentBox
+        h2 Contents
+        textarea(id='content',name='content')
+      #solutionBox
+        h2 Solution
+        textarea(id='solution', name='solution')
+      #testsBox
+        h2 Tests
+        textarea(id='tests',name='content')
+      #difficultyBox
+        h2 Difficulty
+        input(id='difficulty')
+      #categoryBox
+        h2 Category
+        input(id='category')
+      #tagBox
+        h2 Tags
+        input(id='tags')
+      #saveBox
+        button(id='preview', value='Preview') Preview
+        button(id='save', value='Save') Save
+        button(id='delete', value='delete') Delete
+    #previewBox

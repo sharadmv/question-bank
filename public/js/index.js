@@ -13,6 +13,7 @@
       return response.data;
     },
     update : function(id) {
+      console.log(id);
       this._id = id;
       this.fetch();
     }

@@ -33,7 +33,6 @@ var model = {
     this.timestamp = timestamp.getTime();
     this.elapsed = elapsed;
   },
-
   User : function(id, login, username, section) {
     this._id = id;
     this.login = login;
