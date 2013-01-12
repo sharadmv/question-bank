@@ -5,7 +5,17 @@
 
 #questionList {
   float: left;
+  padding: 10px;
 }
+
 #currentQuestion {
-  float: left;
+  position: relative;
+  top: 1%;
+  left: 20%;
+  max-width: 70%;
+  text-align: left;
+}
+
+#currentQuestion.h2{
+  text-align: left;
 }
