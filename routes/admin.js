@@ -46,8 +46,13 @@ exports.delete = function(req, res) {
 };
 // Save question to database
 exports.save = function(req, res) {
+  var question = new dao.Question(req.body);
+  console.log(question);
+  if  (question._id === null || !question.title || question.title == "") {
+      res.json({_id : null});
+      return;
+  }
   if (req.signedCookies.user && req.signedCookies.user.admin) {
-    var question = new dao.Question(req.body);
     console.log(question);
     if (question._id === null) {
         delete question._id;
