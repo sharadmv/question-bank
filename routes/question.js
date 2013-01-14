@@ -15,7 +15,8 @@ exports.check = function(req, res) {
             var user = {
                 question : req.body._id,
                 login : req.signedCookies.user.login,
-                solution : solution
+                solution : solution,
+                correct : correct
             }
             var submission = new dao.Submission(user);
             submission.save();

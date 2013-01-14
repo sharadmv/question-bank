@@ -1,3 +1,4 @@
 cs61a-rb
 cs61a-rf
 cs61a-ti
+cs61a-rh

@@ -25,6 +25,7 @@ var schema = {
         question : mongoose.Schema.ObjectId,
         login : String,
         solution : String,
+        correct : Boolean,
         date :  {type : Date, default : Date.now() }
     })
 }
