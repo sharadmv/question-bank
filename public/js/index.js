@@ -48,6 +48,8 @@
         }
         $.post("/api/check", obj).success(function(result) {
           alert(result.correct ? "Correct!" : "False!");
+        }).error(function() {
+          alert("Please log in!");
         })
       });
     },
