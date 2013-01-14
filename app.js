@@ -4,7 +4,6 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , question = require('./routes/question')
   , admin = require('./routes/admin')
   , user = require('./routes/user')
   , http = require('http')
@@ -44,8 +43,6 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/questions', question.list);
-app.get('/question/:id', question.single);
 app.get('/admin', admin.home);
 app.get('/admin/:action', function(req, res) {
   admin[req.params.action](req, res);
