@@ -3,7 +3,7 @@ var rest = require('restler')
   , model = require('./model.js')
   , URL = require('url');
 
-var url = "http://www.pythontutor.com/web_exec_py3.py";
+var url = "http://www.pythontutor.com/web_exec_py3-1.py";
 
 exports.run = function(code, callback) {
   var data = {

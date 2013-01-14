@@ -9,6 +9,7 @@ var express = require('express')
   , http = require('http')
   , dao = require('./databases/mongo.js')
   , model = require('./util/model.js')
+  , question = require('./routes/question.js')
   , auth = require('./util/auth.js')
   , fs = require('fs')
   , path = require('path');
@@ -100,7 +101,7 @@ app.get('/api/users', function(req, res) {
     res.json(result);
   });
 });
-
+app.post('/api/check', question.check);
 app.post('/settings', user.update);
 
 //API functions

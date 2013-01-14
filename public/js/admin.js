@@ -5,6 +5,8 @@
   var currentQuestionView;
   var loginBox;
 
+  var DEFAULT_TEMPLATE = 'def answer():\n    """YOUR CODE HERE"""';
+
   var preview;
 
   var Preview = Backbone.View.extend({
@@ -29,16 +31,17 @@
       'click #preview' : "preview",
       'change #author' : "update",
       'change #title' : "update",
+      'keyup #content' : "update",
       'change #content' : "update",
       'change #solution' : "update",
       'change #type' : "update",
       'change #tests' : "update",
       'change #category' : "update",
       'change #difficulty' : "update",
-      'change #tags' : "update"
+      'change #tags' : "update",
+      'change #template' : "update"
     },
     delete : function() {
-        console.log(this.question.url());
         this.question.destroy({ success : function(model, response) {
             window.location = "/admin";
         }});
@@ -53,9 +56,13 @@
         this.question.set('category', this.$('#category').val());
         this.question.set('difficulty', this.$('#difficulty').val());
         this.question.set('tags', this.$('#tags').val().trim().split(" "));
+        this.question.set('template', template.getValue());
         this.preview();
     },
     clear : function() {
+        this.question.set('_id', null);
+        this.question.set('id', null);
+        this.question.id = null;
         this.question.set('author', '');
         this.question.set('title', '');
         this.question.set('content', '');
@@ -65,6 +72,7 @@
         this.question.set('category', '');
         this.question.set('difficulty', '');
         this.question.set('tags', []);
+        this.question.set('template', DEFAULT_TEMPLATE);
         this.fields();
     },
     fields : function() {
@@ -77,6 +85,7 @@
         this.$("#category").val(this.question.get('category'));
         this.$("#difficulty").val(this.question.get('difficulty'));
         this.$("#tags").val(this.question.get('tags').join(" "));
+        template.setValue(this.question.get('template'));
         this.preview();
     },
     load : function(question) {
@@ -93,6 +102,7 @@
         this.question.set('category', question.get('category'));
         this.question.set('difficulty', question.get('difficulty'));
         this.question.set('tags', question.get('tags'));
+        this.question.set('template', question.get('template'));
         this.fields();
         this.preview();
     },
@@ -151,6 +161,7 @@
   });
 
   new App();
+  var template;
 
   //Entry point
   $(document).ready(function() {
@@ -160,6 +171,17 @@
     currentQuestion = new CurrentQuestion();
     Backbone.history.start({ root : "/admin" });
     var form = new FormView({ el : $("#currentQuestion") });
+    console.log(form.$("#template"));
+    template = CodeMirror.fromTextArea(form.$("#code")[0], {
+      mode : 'python',
+      stylesheet: "css/pythoncolors.css",
+      path: "../../js/",
+      lineNumbers: true,
+      textWrapping: false,
+      indentUnit: 4,
+      parserConfig: {'pythonVersion': 3, 'strictErrors': true}
+    });
+    window.template = template;
     preview = new Preview({ el : $("#previewBox") });
     $("#newQuestion").click(function() {
         console.log("Clearing form");

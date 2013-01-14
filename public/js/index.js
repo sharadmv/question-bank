@@ -23,13 +23,37 @@
     tagName : "div",
     initialize : function() {
       this.model.bind('change', this.render , this);
+      var template = "<div class='currentTitle'>{{title}}</div><div>{{{content}}}</div><div class='answerArea'>"+
+      "<textarea id='solutionBox'></textarea></div><div class='submissionBox'><button id='submit' class='btn'>Check</button></div>";
+      this.handlebar = Handlebars.compile(template);
     },
     render : function(model) {
       $(this.el).html(this.template(this.model.toJSON()));
       prettyPrint();
+      this.code = CodeMirror.fromTextArea(this.$("#solutionBox")[0], {
+        mode : 'python',
+        stylesheet: "css/pythoncolors.css",
+        path: "../../js/",
+        lineNumbers: true,
+        textWrapping: false,
+        indentUnit: 4,
+        parserConfig: {'pythonVersion': 3, 'strictErrors': true}
+      });
+      this.code.setValue(model.get('template'));
+      var self = this;
+      this.$("#submit").click(function() {
+        var obj = {
+          _id : self.model.get('_id'),
+          solution : self.code.getValue()
+        }
+        $.post("/api/check", obj).success(function(result) {
+          alert(result.correct ? "Correct!" : "False!");
+        })
+      });
     },
     template : function(model) {
-      return marked(model.content)
+      model.content = marked(model.content);
+      return this.handlebar(model);
     }
   });
 
