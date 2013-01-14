@@ -11,11 +11,15 @@ exports.check = function(req, res) {
     dao.Question.findOne({_id : req.body._id}, function(err, question) {
         var code = solution+"\nprint("+question.tests.trim().split("\n").join(")\nprint(")+")";
         pytutor.run(code, function(result) {
-            if (result.stdout.trim() == question.solution.trim()) {
-                res.json({ correct : true });
-            } else {
-                res.json({ correct : false });
+            var correct = result.stdout.trim() == question.solution.trim();
+            var user = {
+                question : req.body._id,
+                login : req.signedCookies.user.login,
+                solution : solution
             }
+            var submission = new dao.Submission(user);
+            submission.save();
+            res.json({ correct : correct });
         });
     })
 };

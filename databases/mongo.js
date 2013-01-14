@@ -22,6 +22,7 @@ var schema = {
         name : String,
     }),
     submission : new mongoose.Schema({
+        question : mongoose.Schema.ObjectId,
         login : String,
         solution : String,
         date :  {type : Date, default : Date.now() }
