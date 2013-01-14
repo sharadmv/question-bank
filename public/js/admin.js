@@ -39,7 +39,6 @@
       'change #category' : "update",
       'change #difficulty' : "update",
       'change #tags' : "update",
-      'change #template' : "update"
     },
     delete : function() {
         this.question.destroy({ success : function(model, response) {
@@ -179,7 +178,10 @@
       lineNumbers: true,
       textWrapping: false,
       indentUnit: 4,
-      parserConfig: {'pythonVersion': 3, 'strictErrors': true}
+      parserConfig: {'pythonVersion': 3, 'strictErrors': true},
+    });
+    template.on('change', function() {
+        form.update();
     });
     window.template = template;
     preview = new Preview({ el : $("#previewBox") });

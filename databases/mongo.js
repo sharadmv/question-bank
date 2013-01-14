@@ -20,10 +20,16 @@ var schema = {
         section : String,
         username : String,
         name : String,
+    }),
+    submission : new mongoose.Schema({
+        login : String,
+        solution : String,
+        date :  {type : Date, default : Date.now() }
     })
 }
 var interface = {
     Question : mongoose.model("Question", schema.question),
-    User : mongoose.model("User", schema.user)
+    User : mongoose.model("User", schema.user),
+    Submission : mongoose.model("Submission", schema.submission),
 }
 module.exports = interface;
