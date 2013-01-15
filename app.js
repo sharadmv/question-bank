@@ -12,6 +12,7 @@ var express = require('express')
   , question = require('./routes/question.js')
   , auth = require('./util/auth.js')
   , fs = require('fs')
+  , async = require('async')
   , path = require('path');
 
 var admins = {};
@@ -102,14 +103,50 @@ app.get('/api/users', function(req, res) {
   });
 });
 app.post('/api/check', question.check);
+app.post('/api/save', question.save);
 app.post('/settings', user.update);
 
 //API functions
 app.get('/api/question/:id', function(req, res) {
   var start = new Date().getTime();
-  dao.Question.findOne({ _id : req.params.id }, function(err, question) {
+  var question, save;
+  async.parallel({
+    question : function(callback) {
+      dao.Question.findOne({ _id : req.params.id }, function(err, result) {
+        callback(null, result);
+      })
+    },
+    save : function(callback) {
+      if (req.signedCookies.user && req.signedCookies.user.login) {
+        dao.Save.findOne({ question : req.params.id, login : req.signedCookies.user.login }, function(err, result) {
+          callback(null, result);
+        })
+      } else {
+          callback(null, null);
+      }
+    },
+    submission : function(callback) {
+      if (req.signedCookies.user && req.signedCookies.user.login) {
+        dao.Submission.findOne({ question : req.params.id, login : req.signedCookies.user.login }, function(err, result) {
+          callback(null, result);
+        })
+      } else {
+          callback(null, null);
+      }
+    }
+  }, function(err, results) {
+    var question = results.question.toObject();
+    question.correct = null;
+    if (results.save) {
+        question.template = results.save.solution;
+    }
+    console.log(results);
+    if (results.submission) {
+        console.log(question);
+        question.correct = results.submission.correct;
+    }
     res.json({ data : question, elapsed : (new Date().getTime() - start)});
-  })
+  });
 });
 
 app.get('/api/question', function(req, res) {

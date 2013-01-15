@@ -27,11 +27,18 @@ var schema = {
         solution : String,
         correct : Boolean,
         date :  {type : Date, default : Date.now() }
+    }),
+    save : new mongoose.Schema({
+        question : mongoose.Schema.ObjectId,
+        login : String,
+        solution : String,
+        date :  {type : Date, default : Date.now() }
     })
 }
 var interface = {
     Question : mongoose.model("Question", schema.question),
     User : mongoose.model("User", schema.user),
     Submission : mongoose.model("Submission", schema.submission),
+    Save : mongoose.model("Save", schema.save),
 }
 module.exports = interface;

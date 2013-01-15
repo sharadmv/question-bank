@@ -16,11 +16,28 @@
       this._id = id;
       var self = this;
       this.fetch({
-        success : function() {
-          self.trigger('check',null);
+        success : function(question) {
+          if (question.get('correct') === true || question.get('correct') === false) {
+            self.trigger('check',{correct:question.get('correct')});
+          } else {
+            self.trigger('check',null);
+          }
         }
       });
 
+    },
+    saveTemplate : function(code) {
+      var obj = {
+        question : this.get('_id'),
+        solution : code
+      }
+      var self = this;
+      $.post("/api/save", obj).success(function(result) {
+        self.trigger("save", result);
+      }).error(function() {
+        //TODO implement error better than alert
+        alert("Please log in!");
+      })
     },
     check : function(code) {
       var obj = {
@@ -29,9 +46,7 @@
       }
       var self = this;
       $.post("/api/check", obj).success(function(result) {
-        self.trigger("check", result);
-      }).error(function() {
-        alert("Please log in!");
+        self.trigger('check', result);
       })
     }
   });
@@ -41,16 +56,16 @@
     initialize : function() {
       this.model.bind('change', this.render , this);
       var template = "<div class='currentTitle'>{{title}}</div><div>{{{content}}}</div><div class='answerArea'>"+
-        "<textarea id='solutionBox'></textarea></div><div class='submissionBox'><button id='submit' class='btn btn-primary checkButton'>Check</button><button class='btn btn-success'>Save</button></div>";
+        "<textarea id='solutionBox'></textarea></div><div class='submissionBox'><button id='submit' class='btn btn-primary checkButton'>Check</button><button class='btn btn-success' id='save'>Save</button></div>";
       this.handlebar = Handlebars.compile(template);
       this.correct = null;
       this.model.bind('check', function(result) {
+        console.log(result)
         if (result) {
           $("#currentQuestion").css({"border-color": (result.correct?"green":"red")});
         } else {
           $("#currentQuestion").css({"border-color": "#E9E9E9"});
-        }
-      }, this);
+        } }, this);
     },
     render : function(model) {
       $(this.el).html(this.template(this.model.toJSON()));
@@ -68,6 +83,9 @@
       var self = this;
       this.$("#submit").click(function() {
         self.model.check(self.code.getValue());
+      });
+      this.$("#save").click(function() {
+        self.model.saveTemplate(self.code.getValue());
       });
     },
     template : function(model) {
