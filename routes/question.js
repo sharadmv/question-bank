@@ -10,10 +10,14 @@ exports.check = function(req, res) {
     var solution = req.body.solution;
     dao.Question.findOne({_id : req.body._id}, function(err, question) {
         var code = solution+"\nprint("+question.tests.trim().split("\n").join(")\nprint(")+")";
+        req.body.question = req.body._id;
         pytutor.run(code, function(result) {
             if (result.stdout) {
                 var correct = result.stdout.trim() == question.solution.trim();
                 if (req.signedCookies.user && req.signedCookies.user.login) {
+                    if (correct) {
+                        exports.save(req, res);
+                    }
                     var user = {
                         question : req.body._id,
                         solution : solution,
