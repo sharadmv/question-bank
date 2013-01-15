@@ -61,6 +61,7 @@ var UpdateView = Backbone.View.extend({
     var v = new this.View({ model : model });
     this._views[model.get('_id')] = v;
     $(this.el).append(v.render().el);
+    this.trigger('add');
     return this;
   },
   remove : function(model) {

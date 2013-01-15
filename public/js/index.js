@@ -105,7 +105,9 @@
       currentQuestion.update(id);
       if (questionsView._views[id]) {
         questionsView._views[id].select(true)
-        questionsView._views[currentId].select(false)
+        if (currentId) {
+          questionsView._views[currentId].select(false)
+        }
       }
       currentId = id;
     }
@@ -117,7 +119,17 @@
   $(document).ready(function() {
     questionList = new QuestionList();
     questionsView = new QuestionsView({ el : $("#questionList"), collection : questionList });
-    questionList.fetch({ update : true });
+    questionList.fetch({ update : true , success  : function() {
+      console.log("SUP")
+    }});
+    questionsView.on('add', function() {
+      var id = currentId;
+      console.log(questionsView._views[id])
+      if (questionsView._views[id]) {
+        console.log("HERE")
+        questionsView._views[id].select(true)
+      }
+    })
     currentQuestion = new CurrentQuestion();
     currentQuestionView = new CurrentQuestionView({ model : currentQuestion, el : $("#currentQuestion")});
     Backbone.history.start({ root : "/" });
