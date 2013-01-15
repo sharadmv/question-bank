@@ -1,21 +1,32 @@
 /* HOME PAGE */
 #contentWrapper {
-  position: relative;
+    position: relative;
 }
 
 #questionList {
-  float: left;
-  padding: 10px;
+    float: left;
+    padding: 10px;
 }
 
 #currentQuestion {
-  position: relative;
-  top: 1%;
-  left: 20%;
-  max-width: 70%;
-  text-align: left;
+    float: left;
+    position: relative;
+    width:700px;
+    text-align: left;
+    background-color: #E9E9E9;
+    border-radius: 10px;
+    margin: 10px;
+    padding:5px;
+    border: 4px #E9E9E9 solid;
+    border-color:#E9E9E9;
 }
-
-#currentQuestion.h2{
-  text-align: left;
+#currentQuestion.p {
+}
+.currentTitle{
+    font-size: 1.4em;
+    text-decoration: underline;
+    margin-bottom: 9px;
+}
+.CodeMirror {
+    background-color: white;
 }

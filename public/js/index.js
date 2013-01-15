@@ -13,9 +13,26 @@
       return response.data;
     },
     update : function(id) {
-      console.log(id);
       this._id = id;
-      this.fetch();
+      var self = this;
+      this.fetch({
+        success : function() {
+          self.trigger('check',null);
+        }
+      });
+
+    },
+    check : function(code) {
+      var obj = {
+        _id : this.get('_id'),
+        solution : code
+      }
+      var self = this;
+      $.post("/api/check", obj).success(function(result) {
+        self.trigger("check", result);
+      }).error(function() {
+        alert("Please log in!");
+      })
     }
   });
 
@@ -24,8 +41,16 @@
     initialize : function() {
       this.model.bind('change', this.render , this);
       var template = "<div class='currentTitle'>{{title}}</div><div>{{{content}}}</div><div class='answerArea'>"+
-      "<textarea id='solutionBox'></textarea></div><div class='submissionBox'><button id='submit' class='btn'>Check</button></div>";
+        "<textarea id='solutionBox'></textarea></div><div class='submissionBox'><button id='submit' class='btn btn-primary checkButton'>Check</button><button class='btn btn-success'>Save</button></div>";
       this.handlebar = Handlebars.compile(template);
+      this.correct = null;
+      this.model.bind('check', function(result) {
+        if (result) {
+          $("#currentQuestion").css({"border-color": (result.correct?"green":"red")});
+        } else {
+          $("#currentQuestion").css({"border-color": "#E9E9E9"});
+        }
+      }, this);
     },
     render : function(model) {
       $(this.el).html(this.template(this.model.toJSON()));
@@ -42,15 +67,7 @@
       this.code.setValue(model.get('template'));
       var self = this;
       this.$("#submit").click(function() {
-        var obj = {
-          _id : self.model.get('_id'),
-          solution : self.code.getValue()
-        }
-        $.post("/api/check", obj).success(function(result) {
-          alert(result.correct ? "Correct!" : "False!");
-        }).error(function() {
-          alert("Please log in!");
-        })
+        self.model.check(self.code.getValue());
       });
     },
     template : function(model) {
