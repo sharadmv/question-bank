@@ -120,13 +120,10 @@
     questionList = new QuestionList();
     questionsView = new QuestionsView({ el : $("#questionList"), collection : questionList });
     questionList.fetch({ update : true , success  : function() {
-      console.log("SUP")
     }});
     questionsView.on('add', function() {
       var id = currentId;
-      console.log(questionsView._views[id])
       if (questionsView._views[id]) {
-        console.log("HERE")
         questionsView._views[id].select(true)
       }
     })

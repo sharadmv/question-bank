@@ -44,7 +44,6 @@ var UpdateView = Backbone.View.extend({
     return this;
   },
   select : function(id) {
-      console.log(this);
     this._views[this.selected].select(true);
   },
   update : function() {
