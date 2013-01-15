@@ -3,9 +3,10 @@
     position: relative;
 }
 
-#questionList {
+#questionWrapper {
     float: left;
-    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 #currentQuestion {
@@ -29,4 +30,6 @@
 }
 .CodeMirror {
     background-color: white;
+}
+#questionList {
 }

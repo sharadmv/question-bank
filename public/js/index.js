@@ -4,6 +4,7 @@
   var currentQuestion;
   var currentQuestionView;
   var loginBox;
+  var currentId;
 
   var CurrentQuestion = Backbone.Model.extend({
     url : function() {
@@ -60,7 +61,6 @@
       this.handlebar = Handlebars.compile(template);
       this.correct = null;
       this.model.bind('check', function(result) {
-        console.log(result)
         if (result) {
           $("#currentQuestion").css({"border-color": (result.correct?"green":"red")});
         } else {
@@ -103,6 +103,11 @@
     },
     question : function(id) {
       currentQuestion.update(id);
+      if (questionsView._views[id]) {
+        questionsView._views[id].select(true)
+        questionsView._views[currentId].select(false)
+      }
+      currentId = id;
     }
   });
 

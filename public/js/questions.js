@@ -43,6 +43,10 @@ var UpdateView = Backbone.View.extend({
     this._empty = true;
     return this;
   },
+  select : function(id) {
+      console.log(this);
+    this._views[this.selected].select(true);
+  },
   update : function() {
     if (this._empty) {
       $(this.el).html("");
@@ -55,13 +59,13 @@ var UpdateView = Backbone.View.extend({
   },
   add : function(model) {
     var v = new this.View({ model : model });
-    this._views[model._id] = v;
+    this._views[model.get('_id')] = v;
     $(this.el).append(v.render().el);
     return this;
   },
   remove : function(model) {
     var v = new this.View({ model : model });
-    this._views[model._id].remove();
+    this._views[model.get('_id')].remove();
     delete this._views[model._id];
   },
   reset : function() {
@@ -72,18 +76,29 @@ var UpdateView = Backbone.View.extend({
   }
 });
 var QuestionView = Backbone.View.extend({
-  tagName : "div",
-  className : "question",
+  tagName : "li",
+  className : "",
   events : {
   },
   initialize : function() {
+    var template = "<a href='"+BASE_URL+"question/{{_id}}'>{{title}}<i class='icon-nav icon-chevron-right'></i></a></div>";
+    this.handlebar = Handlebars.compile(template);
+  },
+  select : function(selected) {
+    if (selected) {
+        this.$el.addClass('active');
+        this.$el.removeClass('inactive');
+    } else {
+        this.$el.addClass('inactive');
+        this.$el.removeClass('active');
+    }
   },
   render : function() {
     $(this.el).html(this.template(this.model.toJSON()));
     return this;
   },
   template : function(model) {
-    return "<a href='"+BASE_URL+"question/"+model._id+"'>"+model.title+"</a>";
+    return this.handlebar(model);
   }
 });
 var QuestionsView = UpdateView.extend({

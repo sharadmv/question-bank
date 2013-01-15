@@ -57,7 +57,6 @@ var session = {
 app.get('/settings', function(req, res) {
   var sections = ['1', '2', '3'];
 
-  console.log(req.signedCookies);
   var user = dao.User.findOne({login : req.signedCookies.user.login}, function(err, result) {
     result = result || {
         login : req.signedCookies.user.login,
@@ -140,9 +139,7 @@ app.get('/api/question/:id', function(req, res) {
     if (results.save) {
         question.template = results.save.solution;
     }
-    console.log(results);
     if (results.submission) {
-        console.log(question);
         question.correct = results.submission.correct;
     }
     res.json({ data : question, elapsed : (new Date().getTime() - start)});
