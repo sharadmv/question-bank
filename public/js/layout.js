@@ -7,7 +7,7 @@
       this.loggedIn = !!username;
       this.showing = false;
       if (this.loggedIn) {
-        this.display("Logout");
+        this.display("Logout ("+window.login+")");
       } else {
         this.display("Login");
       }
