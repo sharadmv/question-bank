@@ -48,17 +48,17 @@ exports.delete = function(req, res) {
 exports.save = function(req, res) {
   var question = new dao.Question(req.body);
   console.log(question);
-  if  (question._id === null || !question.title || question.title == "") {
+  if  (!question.title || question.title == "") {
       res.json({_id : null});
       return;
   }
   if (req.signedCookies.user && req.signedCookies.user.admin) {
-    console.log(question);
     if (question._id === null) {
         delete question._id;
     }
     var upsertData = question.toObject();
     delete upsertData._id;
+    console.log(upsertData);
     dao.Question.findOneAndUpdate({_id: question._id}, upsertData, {upsert: true}, function(err, result){
         if (err) {
             throw err;
